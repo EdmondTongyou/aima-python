@@ -3,7 +3,7 @@ class WolfGoatCabbage(Problem):
     # 0 denotes that the object is on the west bank
     # 1 denotes that the object is on the east bank
     # Farmer must always move per action
-    def __init__(self, initial=({"F", "G", "W", "C"}, {"", "", "", ""}), goal=({"", "", "", ""}, {"F", "G", "W", "C"})):
+    def __init__(self, initial=({"F": 0, "G": 0, "W": 0, "C": 0}), goal=({"F": 1, "G": 1, "W": 1, "C":1})):
         super().__init__(initial, goal)
 
     def actions(self, state):
@@ -13,33 +13,49 @@ class WolfGoatCabbage(Problem):
                             {"F"}
         ]
         
+        if (state == ({"F": 0, "W": 0, "G": 0, "C": 0})):
+            possible_actions.remove({"F", "W"},
+                                    {"F", "C"})
+            possible_actions.append({"F": 1}, {"G": 1})
+        elif (state == ({"F": 1, "W": 0, "G": 1,"C": 0})):
+            possible_actions.remove({"F", "W"},
+                                    {"F", "C"})
+
+        elif (state == ({"F": 0, "W": 0, "G": 1, "C": 0})):
+            possible_actions.remove({"F", "G"})
+
+        elif (state == ({"F": 1, "W": 1, "G": 1, "C": 0})):
+            possible_actions.remove({"F", "C"},
+                                    {"F"})
+
+        else:
+            return
+
         return possible_actions
 
     def result(self, state, action):
-        current_state = state
+        new_state = list(state)
         legal_states = (
-                            # All Legal States
-                            ({"F", "W", "G", "C"}, {"", "", "", ""})    ,
-                            (["", "W", "","C"]   , {"F", "", "G", ""})  ,
-                            ({"F", "W", "", "C"} , {"", "", "G", ""})   ,
-                            ({"", "", "", "C"}   , {"F", "W", "G", ""}) ,
-                            ({"", "", "", ""}    , {"F", "W", "G", "C"}),
+                            # All Legal States, Goal State is omitted.
+                            ({"F": 0, "W": 0, "G": 0, "C": 0}),
+                            ({"F": 1, "W": 0, "G": 1, "C": 0}),
+                            ({"F": 0, "W": 0, "G": 1, "C": 0}),
+                            ({"F": 1, "W": 1, "G": 1, "C": 0})
         )
 
         illegal_states = (
                             # All Illegal States
-                            ({"", "W", "G", ""}  , {"F", "", "", "C"})  ,
-                            ({"", "", "G", "C"}  , {"F", "W", "", ""})  ,
-                            ({"", "W", "G", "C"} , {"F", "", "", ""})   ,
+                            ({"F": 1, "W": 0, "G": 0, "C": 1}),
+                            ({"F": 1, "W": 1, "G": 0, "C": 0}),
+                            ({"F": 1, "W": 0, "G": 0, "C": 0})
         )
 
-        if (current_state in illegal_states):
-            return False
+        if (state in illegal_states):
+            return
 
-        legal_states.remove(current_state)
-        new_state = current_state.actions(state)
-
-        return tuple(new_state)
+        legal_states.remove(state)
+        new_state = frozenset(state.actions(state))
+        return new_state
 
     def goal_test(self, state):
         if isinstance(self.goal, list):
@@ -49,7 +65,7 @@ class WolfGoatCabbage(Problem):
 
 if __name__ == '__main__':
     wgc = WolfGoatCabbage()
-    #solution = depth_first_graph_search(wgc).solution()
-    #print(solution)
+    solution = depth_first_graph_search(wgc).solution()
+    print(solution)
     #solution = breadth_first_graph_search(wgc).solution()
     #print(solution)
