@@ -35,7 +35,7 @@ class WolfGoatCabbage(Problem):
         else:
             return
 
-        return possible_actions
+        return frozenset(possible_actions)
 
     def result(self, state, action):
         new_state = set(state)
@@ -53,7 +53,7 @@ class WolfGoatCabbage(Problem):
         if (state in illegal_states):
             return
 
-        new_state = action.actions(state)
+        new_state = action.actions(new_state)
         return frozenset(new_state)
 
     def goal_test(self, state):
