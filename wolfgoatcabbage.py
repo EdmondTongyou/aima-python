@@ -7,30 +7,30 @@ class WolfGoatCabbage(Problem):
         super().__init__(initial, goal)
 
     def actions(self, state):
-        possible_actions = [["F", "G"],
-                            ["F", "W"],
-                            ["F", "C"],
-                            ["F"]
+        possible_actions = [{"F", "G"},
+                            {"F", "W"},
+                            {"F", "C"},
+                            {"F"}
         ]
         
-        if (state == (["F", "W", "G", "C"], ["", "", "", ""])):
-            possible_actions.remove(["F", "W"])
-            possible_actions.remove(["F", "C"])
+        if (state == ({"F", "W", "G", "C"}, {"", "", "", ""})):
+            possible_actions.remove({"F", "W"})
+            possible_actions.remove({"F", "C"})
 
-        elif (state == (["", "W", "", "C"], ["F", "", "G", ""]) or (["F", "", "G", ""], ["", "W", "", "C"])):
-            possible_actions.remove(["F", "W"])
-            possible_actions.remove(["F", "C"])
+        elif (state == ({"", "W", "", "C"}, {"F", "", "G", ""}) or ({"F", "", "G", ""}, {"", "W", "", "C"})):
+            possible_actions.remove({"F", "W"})
+            possible_actions.remove({"F", "C"})
 
-        elif (state == (["F" , "W" , "", "C" ], ["", "", "G", ""]) or (["" , "" , "G", "" ], ["F", "W", "", "C"])):
-            possible_actions.remove(["F", "G" ])
+        elif (state == ({"F" , "W" , "", "C" }, {"", "", "G", ""}) or ({"" , "" , "G", "" }, {"F", "W", "", "C"})):
+            possible_actions.remove({"F", "G" })
 
-        elif (state == (["F", "W", "G", "" ], ["", "", "","C"]) or (["" , "" , "", "C" ], ["F", "W", "G", ""])):
-            possible_actions.remove(["F", "C" ])
-            possible_actions.remove(["F"])
+        elif (state == ({"F", "W", "G", "" }, {"", "", "","C"}) or ({"" , "" , "", "C" }, {"F", "W", "G", ""})):
+            possible_actions.remove({"F", "C" })
+            possible_actions.remove({"F"})
 
-        elif (state == (["F" , "" , "G", "C" ], ["", "W", "", ""]) or (["" , "W" , "", "" ], ["F", "", "G", "C"])):
-            possible_actions.remove(["F", "W"])
-            possible_actions.remove(["F"])
+        elif (state == ({"F" , "" , "G", "C" }, {"", "W", "", ""}) or ({"" , "W" , "", "" }, {"F", "", "G", "C"})):
+            possible_actions.remove({"F", "W"})
+            possible_actions.remove({"F"})
 
         else:
             return
