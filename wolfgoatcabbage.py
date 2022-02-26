@@ -54,13 +54,19 @@ class WolfGoatCabbage(Problem):
             return
 
         if (action == "FG"):
-            return
+            state[0][0], state[1][0] = state[1][0], state[0][0]
+            state[0][2], state[1][2] = state[1][2], state[0][2]
+
         elif (action == "FW"):
-            return
+            state[0][0], state[1][0] = state[1][0], state[0][0]
+            state[0][1], state[1][1] = state[1][1], state[0][1]
+
         elif (action == "FC"):
-            return
+            state[0][0], state[1][0] = state[1][0], state[0][0]
+            state[0][3], state[1][3] = state[1][3], state[0][3]
+
         elif (action == "F"):
-            return
+            state[0][0], state[1][0] = state[1][0], state[0][0]
 
         return tuple(new_state)
 
