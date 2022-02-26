@@ -11,19 +11,33 @@ class WolfGoatCabbage(Problem):
                             {"F", "W"},
                             {"F", "C"},
                             {"F"}
-                           ]
-        test = []
+        ]
+        
         return possible_actions
 
     def result(self, state, action):
-        possible_states = ((["F", "W", "G", "C"], ["", "", "", ""]),
-                           (["", "W", "","C"]   , ["F", "", "G", ""]),
-                           (["F", "W", "", "C"] , ["", "", "G", ""]),
-                           (["", "", "", "C"]   , ["F", "W", "G", ""]),
-                           )
-        new_state = []
-        if (new_state not in possible_states):
-            pass
+        current_state = state
+        legal_states = (
+                            # All Legal States
+                            ({"F", "W", "G", "C"}, {"", "", "", ""})    ,
+                            (["", "W", "","C"]   , {"F", "", "G", ""})  ,
+                            ({"F", "W", "", "C"} , {"", "", "G", ""})   ,
+                            ({"", "", "", "C"}   , {"F", "W", "G", ""}) ,
+                            ({"", "", "", ""}    , {"F", "W", "G", "C"}),
+        )
+
+        illegal_states = (
+                            # All Illegal States
+                            ({"", "W", "G", ""}  , {"F", "", "", "C"})  ,
+                            ({"", "", "G", "C"}  , {"F", "W", "", ""})  ,
+                            ({"", "W", "G", "C"} , {"F", "", "", ""})   ,
+        )
+
+        if (current_state in illegal_states):
+            return False
+
+        legal_states.remove(current_state)
+        new_state = current_state.actions(state)
 
         return tuple(new_state)
 
