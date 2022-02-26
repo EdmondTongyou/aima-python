@@ -69,6 +69,9 @@ class WolfGoatCabbage(Problem):
         return frozenset(new_state)
 
     def goal_test(self, state):
+        if isinstance(self.goal, list):
+            return is_in(state, self.goal)
+        else:
             return state == self.goal
 
 if __name__ == '__main__':
