@@ -16,6 +16,7 @@ class WolfGoatCabbage(Problem):
         if (state == ({"F", "W", "G", "C"}, {"", "", "", ""})):
             possible_actions.remove({"F", "W"})
             possible_actions.remove({"F", "C"})
+            possible_actions.remove({"F"})
 
         elif (state == ({"", "W", "", "C"}, {"F", "", "G", ""}) or ({"F", "", "G", ""}, {"", "W", "", "C"})):
             possible_actions.remove({"F", "W"})
