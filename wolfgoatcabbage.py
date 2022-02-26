@@ -7,29 +7,29 @@ class WolfGoatCabbage(Problem):
         super().__init__(initial, goal)
 
     def actions(self, state):
-        possible_actions = [["FG"],
-                            ["FW"],
-                            ["FC"],
+        possible_actions = [["F", "G"],
+                            ["F", "W"],
+                            ["F", "C"],
                             ["F"]
         ]
         
         if (state == (["F", "W", "G", "C"], ["", "", "", ""])):
-            possible_actions.remove(["FW"])
-            possible_actions.remove(["FC"])
+            possible_actions.remove(["F", "W"])
+            possible_actions.remove(["F", "C"])
 
         elif (state == (["", "W", "", "C"], ["F", "", "G", ""]) or (["F", "", "G", ""], ["", "W", "", "C"])):
-            possible_actions.remove(["FW"])
-            possible_actions.remove(["FC"])
+            possible_actions.remove(["F", "W"])
+            possible_actions.remove(["F", "C"])
 
         elif (state == (["F" , "W" , "", "C" ], ["", "", "G", ""]) or (["" , "" , "G", "" ], ["F", "W", "", "C"])):
-            possible_actions.remove(["FG" ])
+            possible_actions.remove(["F", "G" ])
 
         elif (state == (["F", "W", "G", "" ], ["", "", "","C"]) or (["" , "" , "", "C" ], ["F", "W", "G", ""])):
-            possible_actions.remove(["FC" ])
+            possible_actions.remove(["F", "C" ])
             possible_actions.remove(["F"])
 
         elif (state == (["F" , "" , "G", "C" ], ["", "W", "", ""]) or (["" , "W" , "", "" ], ["F", "", "G", "C"])):
-            possible_actions.remove(["FW"])
+            possible_actions.remove(["F", "W"])
             possible_actions.remove(["F"])
 
         else:
@@ -53,15 +53,15 @@ class WolfGoatCabbage(Problem):
         if (state in illegal_states):
             return
 
-        if (action == "FG"):
+        if (action == ["F", "G"]):
             state[0][0], state[1][0] = state[1][0], state[0][0]
             state[0][2], state[1][2] = state[1][2], state[0][2]
 
-        elif (action == "FW"):
+        elif (action == ["F", "W"]):
             state[0][0], state[1][0] = state[1][0], state[0][0]
             state[0][1], state[1][1] = state[1][1], state[0][1]
 
-        elif (action == "FC"):
+        elif (action == ["F", "C"]):
             state[0][0], state[1][0] = state[1][0], state[0][0]
             state[0][3], state[1][3] = state[1][3], state[0][3]
 
